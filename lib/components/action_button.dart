@@ -25,7 +25,7 @@ class _ActionButtonState extends State<ActionButton> {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
 
-    void setActionType() {
+    void setActionType() async {
       if (widget.type == ActionType.camera) {
         appState.pickImageFromCamera();
       } else {

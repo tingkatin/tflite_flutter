@@ -26,7 +26,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'isolate_inference.dart';
 
 class ImageClassificationHelper {
-  static const modelPath = 'assets/tflite/model.tflite';
+  static const modelPath = 'assets/tflite/efficientnetv2b1cocoa.tflite';
   static const labelsPath = 'assets/tflite/labels_cocoa.txt';
 
   late final Interpreter interpreter;
@@ -40,9 +40,9 @@ class ImageClassificationHelper {
     final options = InterpreterOptions();
 
     // Use XNNPACK Delegate
-    if (Platform.isAndroid) {
-      options.addDelegate(XNNPackDelegate());
-    }
+    // if (Platform.isAndroid) {
+    //   options.addDelegate(XNNPackDelegate());
+    // }
 
     // Use GPU Delegate
     // doesn't work on emulator

@@ -1,8 +1,11 @@
 import 'package:cocoa/components/action_button.dart';
 import 'package:cocoa/components/image_preview.dart';
 import 'package:cocoa/components/info_tile.dart';
+import 'package:cocoa/components/result.dart';
 import 'package:cocoa/helpers/constants.dart';
+import 'package:cocoa/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -73,6 +77,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
+              if (appState.classification != null) const Result()
             ],
           ),
         ),

@@ -141,7 +141,7 @@ class AppState extends ChangeNotifier {
     var imageData = File(pickedImage.path).readAsBytesSync();
     var image = img.decodeImage(imageData);
     classification = await imageClassificationHelper?.inferenceImage(image!);
-
+    print(classification);
     notifyListeners();
   }
 
