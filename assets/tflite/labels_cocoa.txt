@@ -1,0 +1,8 @@
+criollo_immature
+criollo_mature 
+criollo_overmature
+forastero_immature
+forastero_mature 
+forastero_overmature
+trinitario_immature
+trinitario_mature 
