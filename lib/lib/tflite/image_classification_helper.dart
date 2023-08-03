@@ -17,8 +17,6 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
@@ -26,8 +24,8 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'isolate_inference.dart';
 
 class ImageClassificationHelper {
-  static const modelPath = 'assets/tflite/efficientnetv2b1cocoa.tflite';
-  static const labelsPath = 'assets/tflite/labels_cocoa.txt';
+  static const modelPath = 'assets/tflite/mobilenet_quant.tflite';
+  static const labelsPath = 'assets/tflite/labels.txt';
 
   late final Interpreter interpreter;
   late final List<String> labels;
@@ -40,9 +38,9 @@ class ImageClassificationHelper {
     final options = InterpreterOptions();
 
     // Use XNNPACK Delegate
-    // if (Platform.isAndroid) {
-    //   options.addDelegate(XNNPackDelegate());
-    // }
+    if (Platform.isAndroid) {
+      options.addDelegate(XNNPackDelegate());
+    }
 
     // Use GPU Delegate
     // doesn't work on emulator
@@ -85,14 +83,6 @@ class ImageClassificationHelper {
     // get inference result.
     var results = await responsePort.first;
     return results;
-  }
-
-  // inference camera frame
-  Future<Map<String, double>> inferenceCameraFrame(
-      CameraImage cameraImage) async {
-    var isolateModel = InferenceModel(cameraImage, null, interpreter.address,
-        labels, inputTensor.shape, outputTensor.shape);
-    return _inference(isolateModel);
   }
 
   // inference still image

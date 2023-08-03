@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:cocoa/helpers/constants.dart';
-import 'package:cocoa/main.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ImagePreview extends StatefulWidget {
-  const ImagePreview({super.key});
+  const ImagePreview({super.key, required this.image});
+
+  final File? image;
 
   @override
   State<ImagePreview> createState() => _ImagePreviewState();
@@ -13,9 +15,6 @@ class ImagePreview extends StatefulWidget {
 class _ImagePreviewState extends State<ImagePreview> {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<AppState>();
-    var image = appState.imagePreview;
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Constants.borderRadius),
@@ -25,9 +24,9 @@ class _ImagePreviewState extends State<ImagePreview> {
       width: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(Constants.borderRadius),
-        child: image == null
-            ? Center(child: Text("Tidak ada gambar"))
-            : Image.file(image, fit: BoxFit.cover),
+        child: widget.image == null
+            ? const Center(child: Text("Tidak ada gambar"))
+            : Image.file(widget.image!, fit: BoxFit.cover),
       ),
     );
   }

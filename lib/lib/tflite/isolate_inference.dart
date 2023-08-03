@@ -77,25 +77,34 @@ class IsolateInference {
       // Set tensor input [1, 224, 224, 3]
       final input = [imageMatrix];
       // Set tensor output [1, 8]
-      final output = [List<double>.filled(isolateModel.outputShape[1], 0)];
+      //
+      // ==========WARNING==========
+      // For int quantized model use List<int>
+      // Otherwise use List<double>
+      final output = [List<int>.filled(isolateModel.outputShape[1], 0)];
       // // Run inference
       Interpreter interpreter =
           Interpreter.fromAddress(isolateModel.interpreterAddress);
-      print("Running inference...");
+
+      // DEBUG PURPOSE ONLY: print('Running inference...');
       interpreter.run(input, output);
-      print("Inference successful...");
+      // DEBUG PURPOSE ONLY: print('Finished inference...');
+
       // Get first output tensor
       final result = output.first;
-      int maxScore = result.reduce((a, b) => a + b).toInt();
+
+      // ORIGINAL CODE: int maxScore = result.reduce((a, b) => a + b).toInt();
       // Set classification map {label: points}
       var classification = <String, double>{};
       for (var i = 0; i < result.length; i++) {
-        if (result[i] != 0) {
-          // Set label: points
-          classification[isolateModel.labels[i]] =
-              result[i].toDouble() / maxScore.toDouble();
-        }
+        classification[isolateModel.labels[i]] = result[i].toDouble();
+        //ORIGINAL CODE: if (result[i] != 0) {
+        //   // Set label: points
+        //   classification[isolateModel.labels[i]] =
+        //       result[i].toDouble() / maxScore.toDouble();
+        // }
       }
+
       isolateModel.responsePort.send(classification);
     }
   }

@@ -1,11 +1,6 @@
-import 'dart:io';
-import 'package:cocoa/lib/tflite/image_classification_helper.dart';
 import 'package:cocoa/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:image/image.dart' as img;
 
 final theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
@@ -103,57 +98,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp(
-        title: 'Cocoadetectinator',
-        theme: theme,
-        home: Home(),
-      ),
+    return MaterialApp(
+      title: 'Cocoadetectinator',
+      theme: theme,
+      home: const Home(),
     );
-  }
-}
-
-class AppState extends ChangeNotifier {
-  File? imagePreview;
-  ImageClassificationHelper? imageClassificationHelper;
-  ImagePicker imagePicker = ImagePicker();
-  Map<String, double>? classification;
-
-  AppState() {
-    _initializeState();
-  }
-
-  void _initializeState() {
-    imageClassificationHelper = ImageClassificationHelper();
-    imageClassificationHelper!.initHelper();
-  }
-
-  void pickImageFromCamera() async {
-    XFile? pickedImage =
-        await imagePicker.pickImage(source: ImageSource.camera);
-
-    if (pickedImage == null) {
-      return;
-    }
-
-    imagePreview = File(pickedImage.path);
-    var imageData = File(pickedImage.path).readAsBytesSync();
-    var image = img.decodeImage(imageData);
-    classification = await imageClassificationHelper?.inferenceImage(image!);
-    print(classification);
-    notifyListeners();
-  }
-
-  void pickImageFromGallery() async {
-    XFile? pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (pickedImage == null) {
-      return;
-    }
-
-    imagePreview = File(pickedImage.path);
-    notifyListeners();
   }
 }
