@@ -1,8 +1,6 @@
-Criollo_Immature
-Criollo_Mature 
-Criollo_Overmature
-Forastero_Immature
-Forastero_Mature 
-Forastero_Overmature
-Trinitario_Immature
-Trinitario_Mature 
+Matang_Amelonado
+Matang_Angoleta
+Matang_Guiana
+Belum Matang_Amelonado
+Belum Matang_Angoleta
+Belum Matang_Guiana

@@ -81,7 +81,7 @@ class IsolateInference {
       // ==========WARNING==========
       // For int quantized model use List<int>
       // Otherwise use List<double>
-      final output = [List<int>.filled(isolateModel.outputShape[1], 0)];
+      final output = [List<double>.filled(isolateModel.outputShape[1], 0)];
       // // Run inference
       Interpreter interpreter =
           Interpreter.fromAddress(isolateModel.interpreterAddress);

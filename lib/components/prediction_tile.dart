@@ -19,7 +19,7 @@ class PredictionTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              entry.key,
+              '${entry.key.split("_")[0]} (${entry.key.split("_")[1]})',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.onPrimaryContainer),
             ),

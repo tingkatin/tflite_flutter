@@ -15,7 +15,6 @@
  */
 
 import 'dart:developer';
-import 'dart:io';
 import 'dart:isolate';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
@@ -24,8 +23,8 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'isolate_inference.dart';
 
 class ImageClassificationHelper {
-  static const modelPath = 'assets/tflite/mobilenet_quant.tflite';
-  static const labelsPath = 'assets/tflite/labels.txt';
+  static const modelPath = 'assets/tflite/efficientnetv2b0cocoa_f1_95.tflite';
+  static const labelsPath = 'assets/tflite/labels_cocoa.txt';
 
   late final Interpreter interpreter;
   late final List<String> labels;
@@ -38,9 +37,9 @@ class ImageClassificationHelper {
     final options = InterpreterOptions();
 
     // Use XNNPACK Delegate
-    if (Platform.isAndroid) {
-      options.addDelegate(XNNPackDelegate());
-    }
+    // if (Platform.isAndroid) {
+    //   options.addDelegate(XNNPackDelegate());
+    // }
 
     // Use GPU Delegate
     // doesn't work on emulator
@@ -49,9 +48,9 @@ class ImageClassificationHelper {
     // }
 
     // Use Metal Delegate
-    if (Platform.isIOS) {
-      options.addDelegate(GpuDelegate());
-    }
+    // if (Platform.isIOS) {
+    //   options.addDelegate(GpuDelegate());
+    // }
 
     // Load model from assets
     interpreter = await Interpreter.fromAsset(modelPath, options: options);

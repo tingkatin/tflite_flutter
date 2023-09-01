@@ -32,16 +32,16 @@ class Prediction extends StatelessWidget {
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
                       Text(
-                        entry.key,
+                        entry.key.split("_")[0],
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      // Text(
-                      //   'Varietas Criollo',
-                      //   style: Theme.of(context)
-                      //       .textTheme
-                      //       .bodyLarge!
-                      //       .copyWith(color: Colors.black.withAlpha(155)),
-                      // ),
+                      Text(
+                        entry.key.split("_")[1],
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.black.withAlpha(155)),
+                      ),
                     ])),
               ])
         ],

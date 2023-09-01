@@ -3,10 +3,11 @@ Map<String, double>? processOutput(Map<String, double>? classification) {
     return null;
   }
 
-  // PIPELINE: SORT | FILTER
+  // PIPELINE: SORT | FILTER | TO PERCENT
   var sorted = sort(classification);
   var filtered = filter(sorted, 4, 0.0);
-  return filtered;
+  var percentConverted = toPercent(filtered);
+  return percentConverted;
 }
 
 Map<String, double> sort(Map<String, double> classification) {
@@ -32,4 +33,14 @@ Map<String, double> filter(
   });
 
   return filtered;
+}
+
+Map<String, double> toPercent(Map<String, double> classification) {
+  Map<String, double> percentage = {};
+
+  classification.forEach((key, value) {
+    percentage[key] = value * 100;
+  });
+
+  return percentage;
 }
