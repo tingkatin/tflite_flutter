@@ -8,7 +8,7 @@ class Prediction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 290,
       child: SfRadialGauge(
         enableLoadingAnimation: true,

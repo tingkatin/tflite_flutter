@@ -3,9 +3,9 @@ import 'package:cocoa/helpers/constants.dart';
 import 'package:flutter/material.dart';
 
 class ResultModal extends StatelessWidget {
-  const ResultModal({super.key, this.processImage});
+  const ResultModal({super.key, required this.processImage});
 
-  final Future<Map<String, double>?>? processImage;
+  final Future<Map<String, dynamic>?>? processImage;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,8 @@ class ResultModal extends StatelessWidget {
               future: processImage,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  var classification = snapshot.data;
+                  var classification = snapshot.data!['classification'];
+                  var inferenceTime = snapshot.data!['inferenceTime'];
 
                   // Data Empty
                   if (classification!.isEmpty) {
@@ -31,7 +32,9 @@ class ResultModal extends StatelessWidget {
                   }
 
                   // Data Not Empty
-                  return Result(classification: classification);
+                  return Result(
+                      classification: classification,
+                      inferenceTime: inferenceTime);
 
                   // If ERROR
                 } else if (snapshot.hasError) {

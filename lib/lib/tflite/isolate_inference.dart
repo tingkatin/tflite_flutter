@@ -86,9 +86,14 @@ class IsolateInference {
       Interpreter interpreter =
           Interpreter.fromAddress(isolateModel.interpreterAddress);
 
-      // DEBUG PURPOSE ONLY: print('Running inference...');
+      final startTime = DateTime.now();
+      // RUNNING INFERENCE==========
       interpreter.run(input, output);
-      // DEBUG PURPOSE ONLY: print('Finished inference...');
+      // RUNNING INFERENCE==========
+      final endTime = DateTime.now();
+      final timeDiff = endTime.difference(startTime);
+      final inferenceTime = timeDiff.inMilliseconds;
+      print("Inference Time: $inferenceTime");
 
       // Get first output tensor
       final result = output.first;

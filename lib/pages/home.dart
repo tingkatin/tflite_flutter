@@ -7,6 +7,9 @@ import 'package:cocoa/components/result_modal.dart';
 import 'package:cocoa/helpers/constants.dart';
 import 'package:cocoa/helpers/process_result.dart';
 import 'package:cocoa/lib/tflite/image_classification_helper.dart';
+import 'package:cocoa/pages/amelonado_route.dart';
+import 'package:cocoa/pages/angoleta_route.dart';
+import 'package:cocoa/pages/guiana_route.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
@@ -66,15 +69,28 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<Map<String, double>?>? processImage(File? imagePreview) async {
+  Future<Map<String, dynamic>?>? processImage(File? imagePreview) async {
     if (imagePreview != null) {
       var imageData = imagePreview.readAsBytesSync();
       var image = img.decodeImage(imageData);
+
+      DateTime startTime = DateTime.now();
+      // Doing Inference
       Map<String, double>? classification =
           await imageClassificationHelper?.inferenceImage(image!);
+      DateTime endTime = DateTime.now();
+      Duration timeDiff = endTime.difference(startTime);
+      int inferenceTime = timeDiff.inMilliseconds;
 
+      // Preprocess Inference Output
       var processed = processOutput(classification);
-      return processed;
+
+      // Classification is Map<String, double>
+      // Inference Time is int
+      return {
+        'classification': processed,
+        'inferenceTime': inferenceTime,
+      };
     }
 
     return null;
@@ -159,20 +175,44 @@ class _HomeState extends State<Home> {
               child: Row(
                 children: <Widget>[
                   const SizedBox(width: Constants.padding),
-                  InfoTile(
-                    title: "Varietas Criollo",
-                    image: Image.asset('assets/images/cocoa.jpg',
-                        fit: BoxFit.cover),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AmelonadoRoute()));
+                    },
+                    child: InfoTile(
+                      title: "Varietas Amelonado",
+                      image: Image.asset('assets/images/amelonado.jpg',
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                  InfoTile(
-                    title: "Varietas Forastero",
-                    image: Image.asset('assets/images/forastero.jpg',
-                        fit: BoxFit.cover),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AngoletaRoute()));
+                    },
+                    child: InfoTile(
+                      title: "Varietas Angoleta",
+                      image: Image.asset('assets/images/angoleta.jpg',
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                  InfoTile(
-                    title: "Varietas Trinitario",
-                    image: Image.asset('assets/images/trinitario.jpg',
-                        fit: BoxFit.cover),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GuianaRoute()));
+                    },
+                    child: InfoTile(
+                      title: "Varietas Guiana",
+                      image: Image.asset('assets/images/guiana.jpg',
+                          fit: BoxFit.cover),
+                    ),
                   ),
                   const SizedBox(width: Constants.padding),
                 ],
