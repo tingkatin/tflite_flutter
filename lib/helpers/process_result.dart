@@ -5,7 +5,7 @@ Map<String, double>? processOutput(Map<String, double>? classification) {
 
   // PIPELINE: SORT | FILTER | TO PERCENT
   var sorted = sort(classification);
-  var filtered = filter(sorted, 4, 0.0);
+  var filtered = filter(sorted, 0.5);
   var percentConverted = toPercent(filtered);
   return percentConverted;
 }
@@ -21,14 +21,12 @@ Map<String, double> sort(Map<String, double> classification) {
 }
 
 Map<String, double> filter(
-    Map<String, double> classification, int limit, double threshold) {
+    Map<String, double> classification, double threshold) {
   Map<String, double> filtered = {};
-  int count = 0;
 
   classification.forEach((key, value) {
-    if (value > threshold && count < limit) {
+    if (value > threshold) {
       filtered[key] = value;
-      count++;
     }
   });
 

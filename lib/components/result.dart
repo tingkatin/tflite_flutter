@@ -36,12 +36,12 @@ class Result extends StatelessWidget {
         ),
         const SizedBox(height: Constants.distance),
         Container(
+          padding: const EdgeInsets.all(Constants.padding),
           decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
             borderRadius: BorderRadius.circular(Constants.borderRadius),
-            color: Theme.of(context).colorScheme.secondaryContainer,
           ),
           width: double.infinity,
-          height: 200,
           child: Center(
             child: infoWidget,
           ),

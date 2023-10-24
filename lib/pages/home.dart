@@ -74,13 +74,12 @@ class _HomeState extends State<Home> {
       var imageData = imagePreview.readAsBytesSync();
       var image = img.decodeImage(imageData);
 
-      DateTime startTime = DateTime.now();
       // Doing Inference
       Map<String, double>? classification =
           await imageClassificationHelper?.inferenceImage(image!);
-      DateTime endTime = DateTime.now();
-      Duration timeDiff = endTime.difference(startTime);
-      int inferenceTime = timeDiff.inMilliseconds;
+
+      int? inferenceTime = classification?["inference_time"]?.toInt();
+      classification?.remove("inference_time");
 
       // Preprocess Inference Output
       var processed = processOutput(classification);

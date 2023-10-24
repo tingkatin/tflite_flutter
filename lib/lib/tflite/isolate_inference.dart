@@ -93,7 +93,7 @@ class IsolateInference {
       final endTime = DateTime.now();
       final timeDiff = endTime.difference(startTime);
       final inferenceTime = timeDiff.inMilliseconds;
-      print("Inference Time: $inferenceTime");
+      print("New inference time: ${inferenceTime.toString()}");
 
       // Get first output tensor
       final result = output.first;
@@ -101,6 +101,7 @@ class IsolateInference {
       // ORIGINAL CODE: int maxScore = result.reduce((a, b) => a + b).toInt();
       // Set classification map {label: points}
       var classification = <String, double>{};
+      classification["inference_time"] = inferenceTime.toDouble();
       for (var i = 0; i < result.length; i++) {
         classification[isolateModel.labels[i]] = result[i].toDouble();
         //ORIGINAL CODE: if (result[i] != 0) {

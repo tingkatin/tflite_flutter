@@ -23,8 +23,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'isolate_inference.dart';
 
 class ImageClassificationHelper {
-  static const modelPath =
-      'assets/tflite/efficientnetv2b1cocoa_f1_97_quant.tflite';
+  static const modelPath = 'assets/tflite/b2_quant.tflite';
   static const labelsPath = 'assets/tflite/labels_cocoa.txt';
 
   late final Interpreter interpreter;
@@ -57,7 +56,7 @@ class ImageClassificationHelper {
     interpreter = await Interpreter.fromAsset(modelPath, options: options);
     // Get tensor input shape [1, 224, 224, 3]
     inputTensor = interpreter.getInputTensors().first;
-    // Get tensor output shape [1, 1001]
+    // Get tensor output shape [1, 6]
     outputTensor = interpreter.getOutputTensors().first;
 
     log('Interpreter loaded successfully');
