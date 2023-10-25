@@ -82,6 +82,7 @@ class IsolateInference {
       // For int quantized model use List<int>
       // Otherwise use List<double>
       final output = [List<double>.filled(isolateModel.outputShape[1], 0)];
+
       // // Run inference
       Interpreter interpreter =
           Interpreter.fromAddress(isolateModel.interpreterAddress);
@@ -91,9 +92,9 @@ class IsolateInference {
       interpreter.run(input, output);
       // RUNNING INFERENCE==========
       final endTime = DateTime.now();
+
       final timeDiff = endTime.difference(startTime);
       final inferenceTime = timeDiff.inMilliseconds;
-      print("New inference time: ${inferenceTime.toString()}");
 
       // Get first output tensor
       final result = output.first;

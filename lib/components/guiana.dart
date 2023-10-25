@@ -10,8 +10,8 @@ class Guiana extends StatelessWidget {
     return const Column(
       children: [
         Text(
-          "    Guiana adalah varietas kakao yang kurang dikenal dan endemik dari Guyana Prancis. Kakao Guiana berbeda dari pohon kakao lainnya dengan karakteristiknya seperti alur yang agak dalam dan permukaan yang kasar. Gambar (A) merupakan contoh Guiana mentah dan (B) merupakan Guiana matang.",
-          textAlign: TextAlign.justify,
+          "Guiana adalah varietas kakao yang kurang dikenal dan endemik dari Guyana Prancis. Kakao Guiana berbeda dari pohon kakao lainnya dengan karakteristiknya seperti alur yang agak dalam dan permukaan yang kasar. Gambar (A) merupakan contoh Guiana mentah dan (B) merupakan Guiana matang.",
+          textAlign: TextAlign.start,
         ),
         SizedBox(height: Constants.distance),
         InlineImages(

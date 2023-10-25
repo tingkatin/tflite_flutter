@@ -11,6 +11,8 @@ import 'package:cocoa/pages/amelonado_route.dart';
 import 'package:cocoa/pages/angoleta_route.dart';
 import 'package:cocoa/pages/guiana_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:resource_usage/resource_usage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 
@@ -31,6 +33,25 @@ class _HomeState extends State<Home> {
   void _initializeState() {
     imageClassificationHelper = ImageClassificationHelper();
     imageClassificationHelper!.initHelper();
+  }
+
+  Future<double> getMemoryUsage() async {
+    var resource = ResourceUsage();
+    double memory = await resource.getMemoryUsage() ?? 0.0;
+    return memory;
+  }
+
+  Future<List<double>> getCpuStart() async {
+    var resource = ResourceUsage();
+    List<double> cpuAndProcessTimes = await resource.getCpuStart() ?? [];
+    return cpuAndProcessTimes;
+  }
+
+  Future<double> getCpuEnd(double cpuTimeSec, double processTimeSec) async {
+    var resource = ResourceUsage();
+    double avgLoad =
+        await resource.getCpuEnd(cpuTimeSec, processTimeSec) ?? 0.0;
+    return avgLoad;
   }
 
   void reset() {
@@ -74,12 +95,22 @@ class _HomeState extends State<Home> {
       var imageData = imagePreview.readAsBytesSync();
       var image = img.decodeImage(imageData);
 
+      double memBefore = await getMemoryUsage();
+
+      List<double> timesStart = await getCpuStart();
+
       // Doing Inference
       Map<String, double>? classification =
           await imageClassificationHelper?.inferenceImage(image!);
 
+      double cpuDifference = await getCpuEnd(timesStart[0], timesStart[1]);
+
+      double memAfter = await getMemoryUsage();
+
       int? inferenceTime = classification?["inference_time"]?.toInt();
       classification?.remove("inference_time");
+
+      double memoryDifference = (memAfter - memBefore).abs();
 
       // Preprocess Inference Output
       var processed = processOutput(classification);
@@ -89,6 +120,8 @@ class _HomeState extends State<Home> {
       return {
         'classification': processed,
         'inferenceTime': inferenceTime,
+        'cpuUsage': cpuDifference,
+        'memoryUsage': memoryDifference,
       };
     }
 

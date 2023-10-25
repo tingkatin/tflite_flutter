@@ -23,6 +23,8 @@ class ResultModal extends StatelessWidget {
                 if (snapshot.hasData) {
                   var classification = snapshot.data!['classification'];
                   var inferenceTime = snapshot.data!['inferenceTime'];
+                  var cpuUsage = snapshot.data!['cpuUsage'];
+                  var memoryUsage = snapshot.data!['memoryUsage'];
 
                   // Data Empty
                   if (classification!.isEmpty) {
@@ -33,11 +35,15 @@ class ResultModal extends StatelessWidget {
 
                   // Data Not Empty
                   return Result(
-                      classification: classification,
-                      inferenceTime: inferenceTime);
+                    classification: classification,
+                    inferenceTime: inferenceTime,
+                    cpuUsage: cpuUsage,
+                    memoryUsage: memoryUsage,
+                  );
 
                   // If ERROR
                 } else if (snapshot.hasError) {
+                  print(snapshot.error);
                   return const SizedBox(
                       height: 400, child: Center(child: Text("Error")));
 

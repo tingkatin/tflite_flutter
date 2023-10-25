@@ -44,6 +44,8 @@ dependencies:
   camera: ^0.10.5+2
   syncfusion_flutter_gauges: ^22.2.7
   flutter_launcher_icons: ^0.13.1
+  resource_usage:
+    path: D:/PROGRAMMING/FLUTTER/resource_usage
 
 flutter_launcher_icons:
   image_path_android: "assets/icon/app_icon.png"

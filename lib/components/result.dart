@@ -8,9 +8,15 @@ import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
   const Result(
-      {super.key, required this.classification, required this.inferenceTime});
+      {super.key,
+      required this.classification,
+      required this.inferenceTime,
+      required this.cpuUsage,
+      required this.memoryUsage});
   final Map<String, double>? classification;
   final int? inferenceTime;
+  final double cpuUsage;
+  final double memoryUsage;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +33,16 @@ class Result extends StatelessWidget {
     return Column(
       children: [
         Prediction(entry: prediction),
-        // ...?classification?.entries.skip(1).map(
-        //       (entry) => PredictionTile(entry: entry),
-        //     )
         Center(
           child: Text("Inferensi selesai dalam $inferenceTime ms",
+              style: Theme.of(context).textTheme.bodySmall),
+        ),
+        Center(
+          child: Text("CPU Usage: ${cpuUsage.toStringAsFixed(2)} %",
+              style: Theme.of(context).textTheme.bodySmall),
+        ),
+        Center(
+          child: Text("Memory Usage: ${memoryUsage.toStringAsFixed(1)} MB",
               style: Theme.of(context).textTheme.bodySmall),
         ),
         const SizedBox(height: Constants.distance),
