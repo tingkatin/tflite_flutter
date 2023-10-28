@@ -37,13 +37,68 @@ class Result extends StatelessWidget {
           child: Text("Inferensi selesai dalam $inferenceTime ms",
               style: Theme.of(context).textTheme.bodySmall),
         ),
-        Center(
-          child: Text("CPU Usage: ${cpuUsage.toStringAsFixed(2)} %",
-              style: Theme.of(context).textTheme.bodySmall),
-        ),
-        Center(
-          child: Text("Memory Usage: ${memoryUsage.toStringAsFixed(1)} MB",
-              style: Theme.of(context).textTheme.bodySmall),
+        const SizedBox(height: Constants.distance),
+        Row(
+          children: [
+            // CPU USAGE
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(Constants.padding),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onInverseSurface,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(Constants.borderRadius),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "${cpuUsage.toStringAsFixed(2)} %",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    Text(
+                      "CPU Usage",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.black.withAlpha(155)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: Constants.distance),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(Constants.padding),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onInverseSurface,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(Constants.borderRadius),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "${memoryUsage.toStringAsFixed(1)} MB",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    Text(
+                      "RAM Usage",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.black.withAlpha(155)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: Constants.distance),
         Container(

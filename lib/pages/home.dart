@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
   File? imagePreview;
   ImagePicker imagePicker = ImagePicker();
   ImageClassificationHelper? imageClassificationHelper;
+  double threshold = 0.4;
 
   void _initializeState() {
     imageClassificationHelper = ImageClassificationHelper();
@@ -77,7 +78,7 @@ class _HomeState extends State<Home> {
         isDismissible: true,
         showDragHandle: true,
         builder: (BuildContext context) =>
-            ResultModal(processImage: processImage(imagePreview)));
+            ResultModal(processImage: processImage(imagePreview, threshold)));
 
     if (pickedImage == null) {
       // Dismiss the modal when the image picking is canceled
@@ -90,7 +91,8 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<Map<String, dynamic>?>? processImage(File? imagePreview) async {
+  Future<Map<String, dynamic>?>? processImage(
+      File? imagePreview, double threshold) async {
     if (imagePreview != null) {
       var imageData = imagePreview.readAsBytesSync();
       var image = img.decodeImage(imageData);
@@ -113,10 +115,8 @@ class _HomeState extends State<Home> {
       double memoryDifference = (memAfter - memBefore).abs();
 
       // Preprocess Inference Output
-      var processed = processOutput(classification);
+      var processed = processOutput(classification, threshold);
 
-      // Classification is Map<String, double>
-      // Inference Time is int
       return {
         'classification': processed,
         'inferenceTime': inferenceTime,
@@ -140,7 +140,6 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: ListView(
           children: [
-            // INFORMASI
             Padding(
               padding: const EdgeInsets.fromLTRB(Constants.padding,
                   Constants.padding, Constants.padding, Constants.padding - 10),
@@ -186,6 +185,64 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
+
+            const SizedBox(height: Constants.distance),
+
+            Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: Constants.distance),
+              padding: const EdgeInsets.all(Constants.padding),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(Constants.borderRadius),
+              ),
+              width: double.infinity,
+              child: Column(children: [
+                // TITLE
+                Center(
+                  child: Text(
+                    "Threshold: $threshold",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                // SLIDER
+                Slider(
+                  value: threshold,
+                  min: 0.4,
+                  max: 0.9,
+                  divisions: 5,
+                  label: threshold.toStringAsFixed(1),
+                  onChanged: (double value) {
+                    setState(() {
+                      threshold = (value * 10).roundToDouble() / 10;
+                    });
+                  },
+                ),
+
+                // NOTICE
+                Container(
+                  padding: const EdgeInsets.all(Constants.padding),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onInverseSurface,
+                    // border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(Constants.borderRadius),
+                  ),
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                        "Nilai Threshold dapat diatur untuk mempengaruhi sensitivitas model untuk mendeteksi kakao pada citra.",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall),
+                  ),
+                ),
+              ]),
+            ),
+
+            const SizedBox(height: Constants.distance),
 
             // INFORMASI
             Padding(

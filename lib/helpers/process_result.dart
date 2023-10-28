@@ -1,11 +1,12 @@
-Map<String, double>? processOutput(Map<String, double>? classification) {
+Map<String, double>? processOutput(
+    Map<String, double>? classification, double threshold) {
   if (classification == null) {
     return null;
   }
 
   // PIPELINE: SORT | FILTER | TO PERCENT
   var sorted = sort(classification);
-  var filtered = filter(sorted, 0.5);
+  var filtered = filter(sorted, threshold);
   var percentConverted = toPercent(filtered);
   return percentConverted;
 }
