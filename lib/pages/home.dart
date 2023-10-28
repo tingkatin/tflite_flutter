@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
   File? imagePreview;
   ImagePicker imagePicker = ImagePicker();
   ImageClassificationHelper? imageClassificationHelper;
-  double threshold = 0.4;
+  double threshold = 0.5;
 
   void _initializeState() {
     imageClassificationHelper = ImageClassificationHelper();
@@ -212,9 +212,9 @@ class _HomeState extends State<Home> {
                 // SLIDER
                 Slider(
                   value: threshold,
-                  min: 0.4,
+                  min: 0.3,
                   max: 0.9,
-                  divisions: 5,
+                  divisions: 6,
                   label: threshold.toStringAsFixed(1),
                   onChanged: (double value) {
                     setState(() {
