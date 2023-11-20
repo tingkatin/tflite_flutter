@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
   File? imagePreview;
   ImagePicker imagePicker = ImagePicker();
   ImageClassificationHelper? imageClassificationHelper;
-  double threshold = 0.5;
+  double threshold = 0.6;
 
   void _initializeState() {
     imageClassificationHelper = ImageClassificationHelper();
