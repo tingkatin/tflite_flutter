@@ -210,7 +210,7 @@ class _HomeState extends State<Home> {
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(Constants.borderRadius))),
-                  child: const Text("Live")),
+                  child: const Text("Live Kamera")),
             ),
 
             const SizedBox(height: Constants.distance),
