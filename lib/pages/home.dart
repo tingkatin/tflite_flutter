@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:cocoa/components/action_button.dart';
 import 'package:cocoa/components/image_preview.dart';
 import 'package:cocoa/components/info_tile.dart';
@@ -10,6 +11,7 @@ import 'package:cocoa/lib/tflite/image_classification_helper.dart';
 import 'package:cocoa/pages/amelonado_route.dart';
 import 'package:cocoa/pages/angoleta_route.dart';
 import 'package:cocoa/pages/guiana_route.dart';
+import 'package:cocoa/pages/live.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:resource_usage/resource_usage.dart';
@@ -184,6 +186,31 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
+            ),
+
+            const SizedBox(height: Constants.distance),
+
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: Constants.padding),
+              child: FilledButton.tonal(
+                  onPressed: () async {
+                    List<CameraDescription> availableCamera =
+                        await availableCameras();
+                    var cameraDescription = availableCamera.first;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Live(
+                              camera: cameraDescription, threshold: threshold)),
+                    );
+                  },
+                  style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.all(Constants.padding),
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(Constants.borderRadius))),
+                  child: const Text("Live")),
             ),
 
             const SizedBox(height: Constants.distance),

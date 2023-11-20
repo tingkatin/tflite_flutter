@@ -18,6 +18,7 @@ import 'dart:developer';
 import 'dart:isolate';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
+import 'package:camera/camera.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 import 'isolate_inference.dart';
@@ -82,6 +83,14 @@ class ImageClassificationHelper {
     // get inference result.
     var results = await responsePort.first;
     return results;
+  }
+
+  // inference camera frame
+  Future<Map<String, double>> inferenceCameraFrame(
+      CameraImage cameraImage) async {
+    var isolateModel = InferenceModel(cameraImage, null, interpreter.address,
+        labels, inputTensor.shape, outputTensor.shape);
+    return _inference(isolateModel);
   }
 
   // inference still image
