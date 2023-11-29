@@ -1,15 +1,24 @@
-# cocoa
+# cocoaNet
 
-A new Flutter project.
+Computer Vision Based Mobile App to Detect Cocoa Pod Maturity.
+Built with python, tensorflow, and flutter
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run the app locally, clone the repository:
+```
+git clone https://github.com/tingkatin/tflite_flutter.git
+```
 
-A few resources to get you started if this is your first Flutter project:
+Install necessary dependency:
+```
+flutter pub get
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Run local development:
+```
+flutter run
+```
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
